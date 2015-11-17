@@ -25,11 +25,14 @@ public class PushInstanceIDListenerService extends InstanceIDListenerService imp
                 // save new token
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(REGISTRATION_ID, token);
+                Log.v(LOG_TAG, "REGISTRATION_ID = "+token);
                 editor.commit();
             } catch (IOException e) {
                 Log.e(LOG_TAG, e.getLocalizedMessage(), e);
             }
 
+        }else{
+            Log.v(LOG_TAG, "SENDER_ID IS EMPTY");
         }
     }
 }
