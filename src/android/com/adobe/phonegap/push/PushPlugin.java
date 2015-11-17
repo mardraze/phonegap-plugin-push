@@ -65,19 +65,10 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
                         Log.v(LOG_TAG, "execute: senderID=" + senderID);
 
                         String savedSenderID = sharedPref.getString(SENDER_ID, "");
-                        String savedRegID = sharedPref.getString(REGISTRATION_ID, "");
+                        String token = sharedPref.getString(REGISTRATION_ID, "");
 
-                        // first time run get new token
-                        if ("".equals(savedSenderID) && "".equals(savedRegID)) {
+                        if ("".equals(savedSenderID) || "".equals(token)) {
                             token = InstanceID.getInstance(getApplicationContext()).getToken(senderID, GCM);
-                        }
-                        // new sender ID, re-register
-                        else if (!savedSenderID.equals(senderID)) {
-                            token = InstanceID.getInstance(getApplicationContext()).getToken(senderID, GCM);
-                        }
-                        // use the saved one
-                        else {
-                            token = sharedPref.getString(REGISTRATION_ID, "");
                         }
 
                         if (!"".equals(token)) {
